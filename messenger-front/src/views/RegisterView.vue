@@ -1,10 +1,11 @@
 <script setup>
+import Register from "@/components/Register.vue"
 
 
 </script>
 
 <template>
   <main>
-    home
+    <Register/>
   </main>
 </template>
