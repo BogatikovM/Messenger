@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useCookies } from 'vue3-cookies'
 import HomeView from '../views/HomeView.vue'
@@ -33,30 +34,26 @@ const router = createRouter({
       name: 'not-found',
       component: NotFoundView,
       meta: { requiresAuth: false }
-    },
+    }
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
-    const token = cookies.get('token')
-    if (token) {
-      // User is authenticated, proceed to the route
-      next();
-    } else {
-      // User is not authenticated, redirect to login
-      next('/');
-      /*
-      return {
-        path: '/',
-        query: { redirect: to.fullPath }
+    try {
+      const response = await axios.post('/api/session')
+      if (response.data.result){
+        next()
+      } else {
+        next('/')
       }
-        */
+    } catch (error) {
+      console.error('Session check failure', error)
     }
   } else {
     // Non-protected route, allow access
-    next();
+    next()
   }
-});
+})
 
 export default router

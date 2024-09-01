@@ -1,7 +1,3 @@
-<script setup>
+<script setup></script>
 
-</script>
-
-<template>
-    Not found
-</template>
+<template>Not found</template>

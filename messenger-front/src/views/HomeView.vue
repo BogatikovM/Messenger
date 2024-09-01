@@ -1,10 +1,5 @@
-<script setup>
-
-
-</script>
+<script setup></script>
 
 <template>
-  <main>
-    home
-  </main>
+  <main>home</main>
 </template>
