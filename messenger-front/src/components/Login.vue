@@ -20,16 +20,9 @@ const handleLogin = async () => {
   }
   try {
     const response = await axios.post('/api/login', loginData)
-    /*
-    cookies.set('token', response.data.token)
-    const token = cookies.get('token')
-    if (token) {
-      router.push('/home')
-    }
-      */
-    if (response.data.result){
+    if (response.data.result === "success"){
       form.failedAttempt = false
-      router.push('/home')
+      router.push('/')
     } else {
       form.failedAttempt = true
     }
@@ -39,23 +32,18 @@ const handleLogin = async () => {
 }
 
 onMounted(async () => {
-  /*
-  const token = cookies.get('token')
-  if (token) {
-    router.push('/home')
-  }
-  */
   try {
     const response = await axios.post('/api/session')
-    if (response.data.result){
-      router.push('/home')
+    if (response.data.result === "success"){
+      router.push('/')
     } else {
-      console.error('No active session')
+      console.log('No active session')
     }
   } catch (error) {
     console.error('Session check failure', error)
   }
 })
+
 </script>
 
 <template>
@@ -78,7 +66,7 @@ onMounted(async () => {
           <p>Incorrect data</p>
         </div>
         <div>
-          <RouterLink to="/register"> Register </RouterLink>
+          <RouterLink to="/registration"> Register </RouterLink>
         </div>
       </form>
     </div>

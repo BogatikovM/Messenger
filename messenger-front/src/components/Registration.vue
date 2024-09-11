@@ -11,7 +11,7 @@ const form = reactive({
   failedAttempt: false
 })
 
-const handleRegister = async () => {
+const handleRegistration = async () => {
   const registrationData = {
     login: form.login,
     password: form.password,
@@ -19,10 +19,9 @@ const handleRegister = async () => {
   }
   try {
     const response = await axios.post('/api/registration', registrationData)
-    if (response.data.result){
-      console.log('123')
+    if (response.data.result === "success"){
       form.failedAttempt = false
-      router.push('/')
+      router.push('/login')
     } else {
       form.failedAttempt = true
     }
@@ -34,8 +33,8 @@ const handleRegister = async () => {
 <template>
   <section>
     <div>
-      <form @submit.prevent="handleRegister">
-        <h2>Register</h2>
+      <form @submit.prevent="handleRegistration">
+        <h2>Registration</h2>
         <div>
           <label for="login">Login</label>
           <input type="text" v-model="form.login" name="login" id="login" placeholder="" />

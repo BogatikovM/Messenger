@@ -1,5 +1,12 @@
-<script setup></script>
+<script setup>
+import Logout from '@/components/Logout.vue';
+</script>
 
 <template>
-  <main>home</main>
+  <main>
+    <div>
+      home
+    </div>
+    <Logout />
+  </main>
 </template>
