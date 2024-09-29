@@ -8,10 +8,10 @@ export const register = async (req, res, next) => {
     const username = req.body.username
 
     try {
-        mongoose.connect("mongodb://localhost/Messenger")
+        mongoose.connect(process.env.mongo_url)
         const user = await User.findOne({ login });
         if (user) {
-            return res.status(400).send({ "result": "fail", "message": "exists" })
+            return res.status(200).send({ "result": "fail", "message": "exists" })
         }
         const newUser = new User({login, password, username})
         await newUser.save()

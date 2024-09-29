@@ -7,16 +7,16 @@ export const login = async (req, res, next) => {
     const password = req.body.password
 
     try {
-    mongoose.connect("mongodb://localhost/Messenger")
+    mongoose.connect(process.env.mongo_url)
     const user = await User.findOne({ login });
     if (!user) {
-      return res.status(400).send({ "result": "fail" });
+      return res.status(200).send({ "result": "fail" });
     }
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
-      return res.status(400).send({ "result": "fail" });
+      return res.status(200).send({ "result": "fail" });
     }
-    req.session.user = { login: login }
+    req.session.user = login
     res.status(200).json({ "result": "success" })
   } catch (err) {
     res.status(500).send({ "result": "fail" });
