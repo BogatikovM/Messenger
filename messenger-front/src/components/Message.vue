@@ -9,9 +9,9 @@ const props = defineProps({
 </script>
 
 <template>
-   <div>
-    <p>{{ message.sender }}</p>
-    <p>{{ message.content }}</p>
-    <p>{{ message.time_created }}</p>
-   </div>
+  <div class="p-2 bg-gray-100 rounded shadow-sm">
+       <p class="font-semibold">{{ message.sender }}</p>
+       <p>{{ message.content }}</p>
+       <p class="text-gray-500 text-sm">{{ message.time_created }}</p>
+  </div>
 </template>

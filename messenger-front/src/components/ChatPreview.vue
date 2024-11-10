@@ -9,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-   <div>
-        <p>{{ chat.name }}</p>
-   </div>
+  <div class="p-2 border-b border-gray-200">
+       <p class="font-medium">{{ chat.name }}</p>
+  </div>
 </template>

@@ -1,15 +1,14 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
-import { Message } from "../schemas/messageSchema.js"
+import { Chat } from "../schemas/chatSchema.js"
 
-export const getMessages = async (req, res, next) => {
-    const user = req.session.user
+export const getChat = async (req, res, next) => {
     const chat = req.query.chat
 
     try {
         mongoose.connect(process.env.mongo_url)
-        const messages = await Message.find({ chat: chat });
-        res.status(201).json({"result": "success", "data": messages})
+        const chatInfo = await Chat.find({ name: chat });
+        res.status(201).json({"result": "success", "data": chatInfo})
     } catch (error) {
         res.status(500).json({"result": "fail"})
     }
