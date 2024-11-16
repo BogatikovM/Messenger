@@ -3,29 +3,34 @@ import { reactive, onMounted, compile } from 'vue'
 import axios from 'axios'
 
 const form = reactive({
-    chatName:''
+    memberName:''
 })
 
-const handleAddingChat = async () => {
-    const chatData = {
-    name: form.chatName,
+const props = defineProps({
+    chatName: String,
+});
+
+const handleAddingMember = async () => {
+    const addingData = {
+        name: form.memberName,
+        chat: props.chatName
     }
     try {
-    const response = await axios.post('/api/chat/add', chatData)
+        const response = await axios.post('/api/chat/user/add', addingData)
     } catch (error) {
-    console.error('Adding failure', error)
+        console.error('Adding failure', error)
     }
 }
 </script>
 
 <template>
     <div class="mb-4">
-        <form @submit.prevent="handleAddingChat" class="flex">
+        <form @submit.prevent="handleAddingMember" class="flex">
             <input 
                 type="text" 
-                v-model="form.chatName" 
-                name="chatName" 
-                placeholder="Chat name" 
+                v-model="form.memberName" 
+                name="memberName" 
+                placeholder="Member name" 
                 class="border border-gray-300 rounded p-2 flex-1 mr-2"
             />
             <button type="submit" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200">Add</button>

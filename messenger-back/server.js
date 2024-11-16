@@ -10,6 +10,10 @@ import chatsGetRoute from './routes/chatsGetRoute.js'
 import chatSendRoute from './routes/chatSendRoute.js'
 import messagesGetRoute from './routes/messagesGetRoute.js'
 import chatGetRoute from './routes/chatGetRoute.js'
+import memberAddingRoute from './routes/memberAddingRoute.js'
+import userGetRoute from './routes/userGetRoute.js'
+import userInfoUpdateRoute from "./routes/userInfoUpdateRoute.js"
+import userPasswordUpdateRoute from "./routes/userPasswordUpdateRoute.js"
 
 const app = express()
 
@@ -35,10 +39,14 @@ app.use('/', registrationRoute)
 app.use('/', loginRoute)
 app.use('/', logoutRoute)
 app.use('/', sessionRoute)
+app.use('/user', userGetRoute)
+app.use('/user', userInfoUpdateRoute)
+app.use('/user', userPasswordUpdateRoute)
 app.use('/chat', chatAddingRoute)
 app.use('/chat', chatsGetRoute)
 app.use('/chat', chatSendRoute)
 app.use('/chat', messagesGetRoute)
 app.use('/chat', chatGetRoute)
+app.use('/chat/user', memberAddingRoute)
 
 app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`))

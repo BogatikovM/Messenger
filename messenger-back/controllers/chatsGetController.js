@@ -8,7 +8,7 @@ export const getChats = async (req, res, next) => {
     try {
         mongoose.connect(process.env.mongo_url)
         const chats = await Chat.find({ members: {$in: [user]} });
-        res.status(201).json({"result": "success", "data": chats})
+        res.status(200).json({"result": "success", "data": chats})
     } catch (error) {
         res.status(500).json({"result": "fail"})
     }

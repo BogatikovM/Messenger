@@ -25,6 +25,7 @@ emitter.on('chatChanged', async () => {   // *Listen* for event
     const response = await axios.get(`/api/chat/messages?chat=${currentChat.value}`);
     state.messages = response.data.data;
     state.isActive = true;
+    state.isInfo = false
     state.currentChat = currentChat.value;
   } catch (error) {
     console.log('Error fetching messages', error);
@@ -71,7 +72,7 @@ const toggleInfo = () => {
   <section class="h-full flex flex-raw">
       <div class="w-full flex flex-col px-2">
           <div class="flex justify-center">
-            <h2 @click="toggleInfo()" class="text-2xl font-bold text-emerald-500 hover:text-emerald-700 hover:cursor-pointer">{{ state.currentChat }}</h2>
+            <h2 @click="toggleInfo()" class="text-2xl font-bold mb-4 text-emerald-500 hover:text-emerald-700 hover:cursor-pointer">{{ state.currentChat }}</h2>
         </div>
         <div class="flex-1 overflow-y-auto">
             <Message 

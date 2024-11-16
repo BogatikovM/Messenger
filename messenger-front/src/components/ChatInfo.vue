@@ -2,6 +2,7 @@
     import { reactive, onMounted } from 'vue';
     import axios from 'axios';
     import Member from './Member.vue';
+    import MemberAdding from './MemberAdding.vue';
 
     const state = reactive({
         chatInfo: {}
@@ -23,7 +24,10 @@
 
 <template>
     <section class="p-4 bg-gray-100 rounded-lg shadow-md text-center">
-        <h2 class="text-xl font-bold mb-4">{{ state.chatInfo.name }}</h2>
+        <h2 class="text-xl font-bold mb-2">{{ state.chatInfo.name }}</h2>
+        <div>
+            <MemberAdding :chatName="chatName"/>
+        </div>
         <div class="space-y-2">
             <Member 
                 v-for="member in state.chatInfo.members" 

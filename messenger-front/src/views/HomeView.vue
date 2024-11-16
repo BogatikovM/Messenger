@@ -1,5 +1,7 @@
 <script setup>
 import { provide,ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import router from '@/router';
 import Logout from '@/components/Logout.vue';
 import Chats from '@/components/Chats.vue';
 import Chat from '@/components/Chat.vue';
@@ -15,6 +17,7 @@ provide('currentChat', {currentChat, updateCurrentChat})
 <template>
   <main class="h-screen flex flex-col">
     <div class="flex justify-between items-center p-4 bg-emerald-500">
+      <RouterLink to="/profile" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200">Profile</RouterLink>
       <Logout />
     </div>
     <div class="flex flex-1 overflow-hidden">
