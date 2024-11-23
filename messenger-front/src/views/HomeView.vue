@@ -20,11 +20,11 @@ provide('currentChat', {currentChat, updateCurrentChat})
       <RouterLink to="/profile" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200">Profile</RouterLink>
       <Logout />
     </div>
-    <div class="flex flex-1 overflow-hidden">
-      <div class="w-1/4 border-r border-gray-300 p-4 overflow-y-auto">
+    <div class="flex flex-1 w-screen overflow-hidden">
+      <div class="w-1/5 border-r border-gray-300 p-4 overflow-y-auto">
         <Chats @click="$emit('chatChanged')" />
       </div>
-      <div class="flex-1 p-4 overflow-y-auto">
+      <div class="w-4/5 p-4 overflow-y-auto">
         <Chat />
       </div>
     </div>

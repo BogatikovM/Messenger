@@ -6,24 +6,26 @@ import Message from './Message.vue';
 import ChatInfo from './ChatInfo.vue'
 
 const form = reactive({
-  content:''
+  content:""
 })
 
 const state = reactive({
   messages: [],
   isActive: false,
-  currentChat: '',
+  currentChat: "",
+  user: "",
   isInfo: false
 })
 
 const { currentChat, updateCurrentChat } = inject('currentChat')
 
-const emitter = inject('emitter');   // Inject `emitter`
+const emitter = inject('emitter');
 
-emitter.on('chatChanged', async () => {   // *Listen* for event
+emitter.on('chatChanged', async () => {
   try {
     const response = await axios.get(`/api/chat/messages?chat=${currentChat.value}`);
     state.messages = response.data.data;
+    state.user = response.data.user
     state.isActive = true;
     state.isInfo = false
     state.currentChat = currentChat.value;
@@ -31,26 +33,7 @@ emitter.on('chatChanged', async () => {   // *Listen* for event
     console.log('Error fetching messages', error);
   }
 });
-/*
-onMounted(async () => {
-  try {
-    const response = await axios.get(`/api/chat/messages?chat=def`);
-    state.messages = response.data.data;
-  } catch (error) {
-    console.log('Error fetching messages', error);
-  }
-})
-*/
-/*
-const handleChatChanged = async () => {
-  try {
-    const response = await axios.get(`/api/chat/messages?chat=def`);
-    state.messages = response.data.data;
-  } catch (error) {
-    console.log('Error fetching messages', error);
-  }
-}
-*/
+
 const handleMessage = async () => {
     const messageData = {
         content: form.content,
@@ -70,22 +53,23 @@ const toggleInfo = () => {
 
 <template>
   <section class="h-full flex flex-raw">
-      <div class="w-full flex flex-col px-2">
+      <div :class="[state.isInfo ? 'w-3/4' : 'w-full', 'flex', 'flex-col', 'px-2']">
           <div class="flex justify-center">
             <h2 @click="toggleInfo()" class="text-2xl font-bold mb-4 text-emerald-500 hover:text-emerald-700 hover:cursor-pointer">{{ state.currentChat }}</h2>
-        </div>
-        <div class="flex-1 overflow-y-auto">
+          </div>
+        <div ref="messagesContainer" class="flex-1 overflow-y-auto">
             <Message 
                 v-for="message in state.messages" 
                 :key="message.id" 
-                :message="message" 
+                :message="message"
+                :user="state.user" 
                 class="mb-2"
             />
         </div>
         <div v-if="state.isActive" class="mt-4">
             <form @submit.prevent="handleMessage" class="flex">
                 <input 
-                    type="text" 
+                    type="textarea" 
                     v-model="form.content" 
                     name="message" 
                     placeholder="Type here..." 
@@ -95,8 +79,8 @@ const toggleInfo = () => {
             </form>
         </div>
       </div>
-      <div v-if="state.isActive && state.isInfo" class="flex px-2">
-        <ChatInfo :chatName="state.currentChat"></ChatInfo>
+      <div v-if="state.isActive && state.isInfo" :class="[{'w-1/4': state.isInfo}, 'flex', 'px-2']">
+        <ChatInfo :chatName="state.currentChat" :user="state.user"></ChatInfo>
       </div>
   </section>
 </template>
