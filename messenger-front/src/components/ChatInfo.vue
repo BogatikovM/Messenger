@@ -25,6 +25,17 @@ const handleLeave = async () => {
   }
 }
 
+const updateMembers = async () => {
+  try {
+    const response = await axios.get(`/api/chat/info?chat=${props.chatName}`)
+    state.chatInfo = response.data.data
+    state.chatInfo.members.splice(state.chatInfo.members.indexOf(props.user), 1)
+    state.isAdmin = response.data.isAdmin
+  } catch (error) {
+    console.log('Error fetching info', error)
+  }
+}
+
 onMounted(async () => {
   try {
     const response = await axios.get(`/api/chat/info?chat=${props.chatName}`)
@@ -41,7 +52,7 @@ onMounted(async () => {
   <section class="p-4 bg-gray-100 rounded-lg shadow-md text-center">
     <h2 class="text-xl font-bold mb-2">{{ state.chatInfo.name }}</h2>
     <div>
-      <MemberAdding :chatName="chatName" />
+      <MemberAdding @updateMembers="updateMembers" :chatName="chatName" />
     </div>
     <button
       @click="handleLeave"
@@ -56,6 +67,7 @@ onMounted(async () => {
         <p class="text-gray-800 px-2 py-1">{{ user }}</p>
       </div>
       <Member
+        @updateMembers="updateMembers"
         v-for="member in state.chatInfo.members"
         :key="member"
         :memberName="member"

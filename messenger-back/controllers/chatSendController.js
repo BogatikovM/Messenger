@@ -9,7 +9,6 @@ export const send = async (req, res, next) => {
     try {
         mongoose.connect(process.env.mongo_url)
         const newMessage = new Message({sender: user, content: content, chat: chat})
-        console.log(newMessage)
         await newMessage.save()
         res.status(201).json({"result": "success"})
     } catch (error) {

@@ -1,5 +1,6 @@
 <script setup>
 import axios from 'axios'
+import { defineEmits } from 'vue'
 
 const props = defineProps({
   memberName: String,
@@ -8,6 +9,8 @@ const props = defineProps({
   chatName: String
 })
 
+const emit = defineEmits(['updateMembers'])
+
 const handleMemberPromote = async () => {
   const memberData = {
     name: props.memberName,
@@ -15,6 +18,7 @@ const handleMemberPromote = async () => {
   }
   try {
     const response = await axios.post('/api/chat/user/promote', memberData)
+    emit('updateMembers')
   } catch (error) {
     console.error('Promoting failure', error)
   }
@@ -27,6 +31,7 @@ const handleMemberDemote = async () => {
   }
   try {
     const response = await axios.post('/api/chat/user/demote', memberData)
+    emit('updateMembers')
   } catch (error) {
     console.error('Demoting failure', error)
   }
@@ -39,6 +44,7 @@ const handleMemberDelete = async () => {
   }
   try {
     const response = await axios.post('/api/chat/user/delete', memberData)
+    emit('updateMembers')
   } catch (error) {
     console.error('Deleting failure', error)
   }

@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted, compile, inject, onBeforeUpdate, ref } from 'vue'
+import { reactive, inject, ref, nextTick } from 'vue'
 import axios from 'axios'
 import Message from './Message.vue'
 import ChatInfo from './ChatInfo.vue'
@@ -9,6 +9,7 @@ const form = reactive({
   messageId: '',
   isUpdate: false
 })
+
 const state = reactive({
   messages: [],
   isActive: false,
@@ -16,8 +17,17 @@ const state = reactive({
   user: '',
   isInfo: false
 })
+
+const bottom = ref(null)
+
+const goToBottom = async () => {
+  await nextTick()
+  bottom.value?.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' })
+}
+
 const { currentChat, updateCurrentChat } = inject('currentChat')
 const emitter = inject('emitter')
+
 emitter.on('chatChanged', async () => {
   try {
     const response = await axios.get(`/api/chat/messages?chat=${currentChat.value}`)
@@ -29,8 +39,13 @@ emitter.on('chatChanged', async () => {
   } catch (error) {
     console.log('Error fetching messages', error)
   }
+  goToBottom()
 })
+
 const handleMessage = async () => {
+  if (form.content.trim() == '') {
+    return
+  }
   try {
     if (form.isUpdate) {
       const messageData = {
@@ -43,18 +58,22 @@ const handleMessage = async () => {
       const messageData = { content: form.content, chat: currentChat.value }
       const response = await axios.post('/api/chat/send', messageData)
     }
+    updateMessages()
   } catch (error) {
     console.error('Sending failure', error)
   }
 }
+
 const toggleInfo = () => {
   state.isInfo = !state.isInfo
 }
+
 const setContent = (oldContent, messageId) => {
   form.content = oldContent
   form.messageId = messageId
   form.isUpdate = true
 }
+
 const updateMessages = async () => {
   try {
     const response = await axios.get(`/api/chat/messages?chat=${currentChat.value}`)
@@ -67,6 +86,7 @@ const updateMessages = async () => {
   } catch (error) {
     console.log('Error fetching messages', error)
   }
+  goToBottom()
 }
 </script>
 <template>
@@ -80,7 +100,7 @@ const updateMessages = async () => {
           {{ state.currentChat }}
         </h2>
       </div>
-      <div class="flex-1 overflow-y-auto">
+      <div ref="messageContainer" class="flex-1 overflow-y-auto">
         <Message
           v-for="message in state.messages"
           :key="message.id"
@@ -90,15 +110,10 @@ const updateMessages = async () => {
           @updateMessage="setContent"
           class="mb-2"
         />
+        <div ref="bottom"></div>
       </div>
       <div v-if="state.isActive" class="mt-4">
-        <form
-          @submit.prevent="
-            handleMessage();
-            updateMessages()
-          "
-          class="flex"
-        >
+        <form @submit.prevent="handleMessage()" class="flex">
           <input
             type="textarea"
             v-model="form.content"
@@ -107,6 +122,8 @@ const updateMessages = async () => {
             class="border border-gray-300 rounded p-2 flex-1 mr-2"
           />
           <button
+            @click="goToBottom"
+            v-if="form.content.trim() !== ''"
             type="submit"
             class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
           >

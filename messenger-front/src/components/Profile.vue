@@ -30,6 +30,7 @@ const handleChangeUserInfo = async () => {
     const response = await axios.post('/api/user/info', userData)
     if (response.data.result === 'success') {
       userInfo.failedAttempt = false
+      userInfo.username = userData.username
     } else {
       userInfo.failedAttempt = true
     }
@@ -53,6 +54,9 @@ const handleChangePassword = async () => {
     const response = await axios.post('/api/user/password', passwordData)
     if (response.data.result === 'success') {
       PasswordInfo.failedAttempt = false
+      PasswordInfo.newPassword = ''
+      PasswordInfo.oldPassword = ''
+      PasswordInfo.repeatPassword = ''
     } else {
       PasswordInfo.failedAttempt = true
     }

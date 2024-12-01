@@ -6,12 +6,15 @@ const form = reactive({
   chatName: ''
 })
 
+const emit = defineEmits(['updateChats'])
+
 const handleAddingChat = async () => {
   const chatData = {
     name: form.chatName
   }
   try {
     const response = await axios.post('/api/chat/add', chatData)
+    emit('updateChats')
   } catch (error) {
     console.error('Adding failure', error)
   }
@@ -20,7 +23,7 @@ const handleAddingChat = async () => {
 
 <template>
   <div class="mb-4">
-    <form @submit.prevent="handleAddingChat" class="flex">
+    <form @submit.prevent="handleAddingChat()" class="flex">
       <input
         type="text"
         v-model="form.chatName"

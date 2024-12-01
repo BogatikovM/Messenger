@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, defineEmits } from 'vue'
 import axios from 'axios'
 
 const form = reactive({
@@ -10,6 +10,8 @@ const props = defineProps({
   chatName: String
 })
 
+const emit = defineEmits(['updateMembers'])
+
 const handleAddingMember = async () => {
   const addingData = {
     name: form.memberName,
@@ -17,6 +19,8 @@ const handleAddingMember = async () => {
   }
   try {
     const response = await axios.post('/api/chat/user/add', addingData)
+    emit('updateMembers')
+    form.memberName = ''
   } catch (error) {
     console.error('Adding failure', error)
   }

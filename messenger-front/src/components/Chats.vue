@@ -1,7 +1,7 @@
 <script setup>
 import ChatPreview from './ChatPreview.vue'
 import ChatAdding from './ChatAdding.vue'
-import { reactive, onMounted, inject } from 'vue'
+import { reactive, onMounted, inject, nextTick } from 'vue'
 import axios from 'axios'
 
 const state = reactive({
@@ -18,6 +18,17 @@ const { currentChat, updateCurrentChat } = inject('currentChat')
 const emitter = inject('emitter')
 const changeChat = () => {
   emitter.emit('chatChanged', 100)
+}
+
+const updateChats = async () => {
+  try {
+    const response = await axios.get('/api/chat')
+    state.chats = response.data.data
+    state.isAdding = false
+    await nextTick()
+  } catch (error) {
+    console.log('Error fetching chats', error)
+  }
 }
 
 onMounted(async () => {
@@ -41,11 +52,11 @@ onMounted(async () => {
         {{ state.isAdding ? 'Cancel' : 'Add' }}
       </button>
     </div>
-    <ChatAdding v-if="state.isAdding" />
+    <ChatAdding v-if="state.isAdding" @updateChats="updateChats" />
     <div class="overflow-y-auto h-[calc(100%-4rem)]">
       <ChatPreview
         @click="
-          updateCurrentChat(chat.name);
+          updateCurrentChat(chat.name)
           changeChat()
         "
         v-for="chat in state.chats"
