@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted, compile, inject } from 'vue'
+import { reactive, onMounted, compile, inject, onBeforeUpdate, ref } from 'vue'
 import axios from 'axios'
 import Message from './Message.vue'
 import ChatInfo from './ChatInfo.vue'
@@ -9,7 +9,6 @@ const form = reactive({
   messageId: '',
   isUpdate: false
 })
-
 const state = reactive({
   messages: [],
   isActive: false,
@@ -17,11 +16,8 @@ const state = reactive({
   user: '',
   isInfo: false
 })
-
 const { currentChat, updateCurrentChat } = inject('currentChat')
-
 const emitter = inject('emitter')
-
 emitter.on('chatChanged', async () => {
   try {
     const response = await axios.get(`/api/chat/messages?chat=${currentChat.value}`)
@@ -34,7 +30,6 @@ emitter.on('chatChanged', async () => {
     console.log('Error fetching messages', error)
   }
 })
-
 const handleMessage = async () => {
   try {
     if (form.isUpdate) {
@@ -45,28 +40,35 @@ const handleMessage = async () => {
       }
       const response = await axios.post('/api/chat/message/update', messageData)
     } else {
-      const messageData = {
-        content: form.content,
-        chat: currentChat.value
-      }
+      const messageData = { content: form.content, chat: currentChat.value }
       const response = await axios.post('/api/chat/send', messageData)
     }
   } catch (error) {
     console.error('Sending failure', error)
   }
 }
-
 const toggleInfo = () => {
   state.isInfo = !state.isInfo
 }
-
 const setContent = (oldContent, messageId) => {
   form.content = oldContent
   form.messageId = messageId
   form.isUpdate = true
 }
+const updateMessages = async () => {
+  try {
+    const response = await axios.get(`/api/chat/messages?chat=${currentChat.value}`)
+    state.messages = response.data.data
+    state.user = response.data.user
+    state.isActive = true
+    state.isInfo = false
+    state.currentChat = currentChat.value
+    form.content = ''
+  } catch (error) {
+    console.log('Error fetching messages', error)
+  }
+}
 </script>
-
 <template>
   <section class="h-full flex flex-raw">
     <div :class="[state.isInfo ? 'w-3/4' : 'w-full', 'flex', 'flex-col', 'px-2']">
@@ -78,7 +80,7 @@ const setContent = (oldContent, messageId) => {
           {{ state.currentChat }}
         </h2>
       </div>
-      <div ref="messagesContainer" class="flex-1 overflow-y-auto">
+      <div class="flex-1 overflow-y-auto">
         <Message
           v-for="message in state.messages"
           :key="message.id"
@@ -90,7 +92,13 @@ const setContent = (oldContent, messageId) => {
         />
       </div>
       <div v-if="state.isActive" class="mt-4">
-        <form @submit.prevent="handleMessage" class="flex">
+        <form
+          @submit.prevent="
+            handleMessage();
+            updateMessages()
+          "
+          class="flex"
+        >
           <input
             type="textarea"
             v-model="form.content"
