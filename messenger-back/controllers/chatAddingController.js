@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
 import { Chat } from "../schemas/chatSchema.js"
 
 export const addChat = async (req, res, next) => {
@@ -12,11 +11,10 @@ export const addChat = async (req, res, next) => {
         if (chat) {
             return res.status(200).send({ "result": "fail", "message": "exists" })
         }
-        const newChat = new Chat({name: name, members: [user], admins: [user]})
+        const newChat = new Chat({ name: name, members: [user], admins: [user] })
         await newChat.save()
-        res.status(201).json({"result": "success"})
+        res.status(201).json({ "result": "success" })
     } catch (error) {
-        res.status(500).json({"result": "fail"})
+        res.status(500).json({ "result": "fail" })
     }
-    
 }

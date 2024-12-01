@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
 import { User } from "../schemas/userSchema.js"
 
 export const register = async (req, res, next) => {
@@ -13,11 +12,10 @@ export const register = async (req, res, next) => {
         if (user) {
             return res.status(200).send({ "result": "fail", "message": "exists" })
         }
-        const newUser = new User({login, password, username})
+        const newUser = new User({ login, password, username })
         await newUser.save()
-        res.status(201).json({"result": "success"})
+        res.status(201).json({ "result": "success" })
     } catch (error) {
-        res.status(500).json({"result": "fail"})
+        res.status(500).json({ "result": "fail" })
     }
-    
 }

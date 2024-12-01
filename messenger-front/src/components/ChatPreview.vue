@@ -1,15 +1,11 @@
 <script setup>
-import { RouterLink } from 'vue-router';
-import { ref, computed } from 'vue';
-
 const props = defineProps({
-  chat: Object,
-});
-
+  chat: Object
+})
 </script>
 
 <template>
   <div class="p-2 border-b border-gray-200">
-       <p class="font-medium">{{ chat.name }}</p>
+    <p class="font-medium">{{ chat.name }}</p>
   </div>
 </template>

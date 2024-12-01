@@ -49,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth) {
     try {
       const response = await axios.post('/api/session')
-      if (response.data.result === "success"){
+      if (response.data.result === 'success') {
         next()
       } else {
         next('/login')

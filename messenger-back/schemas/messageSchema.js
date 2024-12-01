@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt"
+import mongoose from "mongoose"
 
 const messageSchema = new mongoose.Schema({
     sender: {

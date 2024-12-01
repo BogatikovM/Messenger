@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
 import { Message } from "../schemas/messageSchema.js"
 
 export const send = async (req, res, next) => {

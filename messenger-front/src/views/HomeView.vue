@@ -1,23 +1,26 @@
 <script setup>
-import { provide,ref } from 'vue'
+import { provide, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import router from '@/router';
-import Logout from '@/components/Logout.vue';
-import Chats from '@/components/Chats.vue';
-import Chat from '@/components/Chat.vue';
+import Logout from '@/components/Logout.vue'
+import Chats from '@/components/Chats.vue'
+import Chat from '@/components/Chat.vue'
 
 const currentChat = ref('')
 function updateCurrentChat(chat) {
   currentChat.value = chat
 }
 
-provide('currentChat', {currentChat, updateCurrentChat})
+provide('currentChat', { currentChat, updateCurrentChat })
 </script>
 
 <template>
   <main class="h-screen flex flex-col">
     <div class="flex justify-between items-center p-4 bg-emerald-500">
-      <RouterLink to="/profile" class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200">Profile</RouterLink>
+      <RouterLink
+        to="/profile"
+        class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
+        >Profile</RouterLink
+      >
       <Logout />
     </div>
     <div class="flex flex-1 w-screen overflow-hidden">

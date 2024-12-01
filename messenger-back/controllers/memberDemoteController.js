@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
 import { Chat } from "../schemas/chatSchema.js"
 import { User } from "../schemas/userSchema.js"
 
@@ -10,25 +9,20 @@ export const demoteMember = async (req, res, next) => {
 
     try {
         mongoose.connect(process.env.mongo_url)
-
-        const chat = await Chat.findOne({ name:chatName });
-        if (!chat.members.includes(memberName)){
+        const chat = await Chat.findOne({ name: chatName });
+        if (!chat.members.includes(memberName)) {
             return res.status(200).send({ "result": "fail", "message": "not exists" })
         }
-
-        const member = await User.findOne({ login:memberName });
+        const member = await User.findOne({ login: memberName })
         if (!member) {
             return res.status(200).send({ "result": "fail", "message": "user not found" })
         }
-        
-        if (!chat.admins.includes(user)){
+        if (!chat.admins.includes(user)) {
             return res.status(200).send({ "result": "fail", "message": "not permitted" })
         }
-
-        if (!chat.admins.includes(memberName)){
+        if (!chat.admins.includes(memberName)) {
             return res.status(200).send({ "result": "fail", "message": "not admin" })
         }
-
         if (chat.admins.indexOf(user) < chat.admins.indexOf(memberName)) {
             chat.admins.pull(memberName)
             await chat.save()
@@ -38,7 +32,6 @@ export const demoteMember = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error)
-        res.status(500).json({"result": "fail"})
+        res.status(500).json({ "result": "fail" })
     }
-    
 }

@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
 import { Chat } from "../schemas/chatSchema.js"
 
 export const getChat = async (req, res, next) => {
@@ -13,6 +12,5 @@ export const getChat = async (req, res, next) => {
         res.status(201).json({"result": "success", "data": chatInfo, "isAdmin": isAdmin})
     } catch (error) {
         res.status(500).json({"result": "fail"})
-    }
-    
+    } 
 }
