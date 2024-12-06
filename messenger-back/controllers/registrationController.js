@@ -1,10 +1,18 @@
 import mongoose from "mongoose"
+import { isEmpty, isPasswordStrong } from "../check.js"
 import { User } from "../schemas/userSchema.js"
 
 export const register = async (req, res, next) => {
     const login = req.body.login
     const password = req.body.password
     const username = req.body.username
+
+    if (isEmpty(login) || isEmpty(password) || isEmpty(username)) {
+        return res.status(400).json({ "result": "fail", "message": "Empty value" });
+    }
+    if (!isPasswordStrong(password)){
+        return res.status(400).json({ "result": "fail", "message": "Password is weak" });
+    }
 
     try {
         mongoose.connect(process.env.mongo_url)

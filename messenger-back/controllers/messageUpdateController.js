@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { isEmpty } from "../check.js"
 import { Message } from "../schemas/messageSchema.js"
 import { User } from "../schemas/userSchema.js"
 import { Chat } from "../schemas/chatSchema.js"
@@ -8,8 +9,9 @@ export const updateMessage = async (req, res, next) => {
     const chatName = req.body.chat
     const newContent = req.body.newContent
     const user = req.session.user
-    if (!newContent) {
-        return res.status(200).send({ "result": "fail", "message": "empty content" })
+
+    if (isEmpty(messageId) || isEmpty(chatName) || isEmpty(newContent)) {
+        return res.status(400).json({ "result": "fail", "message": "Empty value" });
     }
 
     try {

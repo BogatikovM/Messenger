@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { isEmpty } from "../check.js"
 import { Message } from "../schemas/messageSchema.js"
 import { User } from "../schemas/userSchema.js"
 import { Chat } from "../schemas/chatSchema.js"
@@ -7,6 +8,10 @@ export const deleteMessage = async (req, res, next) => {
     const messageId = req.body.messageId
     const chatName = req.body.chat
     const user = req.session.user
+
+    if (isEmpty(messageId) || isEmpty(chatName)) {
+        return res.status(400).json({ "result": "fail", "message": "Empty value" });
+    }
 
     try {
         mongoose.connect(process.env.mongo_url)

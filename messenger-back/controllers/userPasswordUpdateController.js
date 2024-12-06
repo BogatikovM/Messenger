@@ -1,11 +1,19 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
+import { isEmpty, isPasswordStrong } from "../check.js"
 import { User } from "../schemas/userSchema.js"
 
 export const updatePassword = async (req, res, next) => {
     const oldPassword = req.body.oldPassword
     const newPassword = req.body.newPassword
     const login = req.session.user
+
+    if (isEmpty(login) || isEmpty(newPassword) || isEmpty(oldPassword)) {
+        return res.status(400).json({ "result": "fail", "message": "Empty value" });
+    }
+    if (!isPasswordStrong(newPassword)){
+        return res.status(400).json({ "result": "fail", "message": "Password is weak" });
+    }
 
     try {
         mongoose.connect(process.env.mongo_url)

@@ -56,7 +56,7 @@ onMounted(async () => {
     <div class="overflow-y-auto h-[calc(100%-4rem)]">
       <ChatPreview
         @click="
-          updateCurrentChat(chat.name)
+          updateCurrentChat(chat.name);
           changeChat()
         "
         v-for="chat in state.chats"

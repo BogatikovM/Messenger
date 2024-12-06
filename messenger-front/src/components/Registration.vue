@@ -18,6 +18,10 @@ const handleRegistration = async () => {
     password: form.password,
     username: form.username
   }
+  if (form.password.length < 11){
+    form.failedAttempt = true
+    return
+  }
   try {
     const response = await axios.post('/api/registration', registrationData)
     if (response.data.result === 'success') {

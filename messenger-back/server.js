@@ -1,6 +1,8 @@
 import express from 'express'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import { RateLimiterMemory } from 'rate-limiter-flexible'
+import helmet from 'helmet'
 import registrationRoute from './routes/registrationRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import logoutRoute from './routes/logoutRoute.js'
@@ -40,6 +42,25 @@ app.use(session({
     cookie: { maxAge: 24*60*60*1000, sameSite: true, httpOnly: true },
     store: sessionStore
 }))
+
+const rateLimiter = new RateLimiterMemory({
+    points: 10,
+    duration:1,
+})
+
+const rateLimiterMiddleware = (req, res, next) => {
+    rateLimiter.consume(req.ip)
+        .then(() => {
+            next()
+        })
+        .catch(() => {
+            res.status(429).send('Too Many Requests')
+        })
+}
+
+app.use(rateLimiterMiddleware)
+
+app.use(helmet())
 
 app.use('/', registrationRoute)
 app.use('/', loginRoute)

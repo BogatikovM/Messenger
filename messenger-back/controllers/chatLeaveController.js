@@ -1,10 +1,15 @@
 import mongoose from "mongoose"
+import { isEmpty } from "../check.js"
 import { Chat } from "../schemas/chatSchema.js"
 import { User } from "../schemas/userSchema.js"
 
 export const leaveChat = async (req, res, next) => {
     const chatName = req.body.chat
     const userName = req.session.user
+
+    if (isEmpty(chatName)) {
+        return res.status(400).json({ "result": "fail", "message": "Empty value" });
+    }
 
     try {
         mongoose.connect(process.env.mongo_url)

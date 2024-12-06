@@ -1,10 +1,15 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
+import { isEmpty } from "../check.js"
 import { User } from "../schemas/userSchema.js"
 
 export const login = async (req, res, next) => {
 	const login = req.body.login
 	const password = req.body.password
+
+	if (isEmpty(login) || isEmpty(password)) {
+        return res.status(400).json({ "result": "fail", "message": "Empty value" });
+    }
 
 	try {
 		mongoose.connect(process.env.mongo_url)

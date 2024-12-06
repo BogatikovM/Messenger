@@ -1,6 +1,5 @@
 <script setup>
 import axios from 'axios'
-import { defineEmits } from 'vue'
 
 const props = defineProps({
   memberName: String,
