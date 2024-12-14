@@ -68,9 +68,9 @@ const deleteMessage = async () => {
           @click="$emit('updateMessage', message.content, message._id)"
           class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
         >
-          Update
+          Редактировать
         </li>
-        <li @click="deleteMessage()" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</li>
+        <li @click="deleteMessage()" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Удалить</li>
       </ul>
     </div>
   </div>

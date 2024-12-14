@@ -61,21 +61,21 @@ const handleMemberDelete = async () => {
         @click="handleMemberPromote"
         class="px-2 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600 transition"
       >
-        Promote
+        Повысить
       </button>
       <button
         v-if="isAdmin && isMemberAdmin"
         @click="handleMemberDemote"
         class="px-2 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600 transition"
       >
-        Demote
+        Понизить
       </button>
       <button
         v-if="isAdmin"
         @click="handleMemberDelete"
         class="px-2 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600 transition"
       >
-        Remove
+        Удалить
       </button>
     </div>
   </div>

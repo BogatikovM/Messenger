@@ -19,7 +19,7 @@ provide('currentChat', { currentChat, updateCurrentChat })
       <RouterLink
         to="/profile"
         class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
-        >Profile</RouterLink
+        >Профиль</RouterLink
       >
       <Logout />
     </div>

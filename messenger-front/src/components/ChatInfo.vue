@@ -58,7 +58,7 @@ onMounted(async () => {
       @click="handleLeave"
       class="bg-red-500 text-white font-semibold py-2 px-4 mb-4 w-full rounded hover:bg-red-600 transition duration-200"
     >
-      Leave
+      Выйти
     </button>
     <div class="space-y-2">
       <div

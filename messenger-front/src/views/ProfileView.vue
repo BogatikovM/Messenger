@@ -9,7 +9,7 @@ import Logout from '@/components/Logout.vue'
       <RouterLink
         to="/"
         class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
-        >Go home</RouterLink
+        >На главную</RouterLink
       >
       <Logout />
     </div>

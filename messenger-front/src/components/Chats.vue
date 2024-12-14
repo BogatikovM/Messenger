@@ -44,12 +44,12 @@ onMounted(async () => {
 <template>
   <section class="h-full">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-semibold">Chats</h2>
+      <h2 class="text-xl font-semibold">Чаты</h2>
       <button
         @click="toggleAdding"
         class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
       >
-        {{ state.isAdding ? 'Cancel' : 'Add' }}
+        {{ state.isAdding ? 'Отменить' : 'Добавить' }}
       </button>
     </div>
     <ChatAdding v-if="state.isAdding" @updateChats="updateChats" />

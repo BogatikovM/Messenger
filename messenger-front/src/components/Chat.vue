@@ -118,7 +118,7 @@ const updateMessages = async () => {
             type="textarea"
             v-model="form.content"
             name="message"
-            placeholder="Type here..."
+            placeholder="Начните ввод..."
             class="border border-gray-300 rounded p-2 flex-1 mr-2"
           />
           <button
@@ -127,7 +127,7 @@ const updateMessages = async () => {
             type="submit"
             class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
           >
-            Send
+            Отправить
           </button>
         </form>
       </div>

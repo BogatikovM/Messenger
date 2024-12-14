@@ -28,14 +28,14 @@ const handleAddingChat = async () => {
         type="text"
         v-model="form.chatName"
         name="chatName"
-        placeholder="Chat name"
+        placeholder="Название чата"
         class="border border-gray-300 rounded p-2 flex-1 mr-2"
       />
       <button
         type="submit"
         class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
       >
-        Add
+        +
       </button>
     </form>
   </div>

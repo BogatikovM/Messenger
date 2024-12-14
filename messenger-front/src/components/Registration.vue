@@ -42,9 +42,9 @@ const handleRegistration = async () => {
         @submit.prevent="handleRegistration"
         class="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4"
       >
-        <h2 class="text-3xl font-bold text-emerald-500">Registration</h2>
+        <h2 class="text-3xl text-center font-bold text-emerald-500 mb-2">Регистрация</h2>
         <div class="mb-4">
-          <label class="block text-gray-700" for="login">Login</label>
+          <label class="block text-gray-700" for="login">Логин</label>
           <input
             type="text"
             v-model="form.login"
@@ -55,7 +55,7 @@ const handleRegistration = async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700" for="password">Password</label>
+          <label class="block text-gray-700" for="password">Пароль</label>
           <input
             type="password"
             v-model="form.password"
@@ -66,7 +66,7 @@ const handleRegistration = async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700" for="passwordConfirm">Confirm password</label>
+          <label class="block text-gray-700" for="passwordConfirm">Повтор пароля</label>
           <input
             type="password"
             v-model="form.passwordConfirm"
@@ -77,7 +77,7 @@ const handleRegistration = async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700" for="username">Username</label>
+          <label class="block text-gray-700" for="username">Имя пользователя</label>
           <input
             type="text"
             v-model="form.username"
@@ -89,17 +89,17 @@ const handleRegistration = async () => {
         </div>
         <div class="flex items-center justify-between">
           <button
-            class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 w-full rounded"
+            class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 mb-2 w-full rounded"
             type="submit"
           >
-            Register
+            Регистрация
           </button>
         </div>
         <div v-if="form.failedAttempt" class="text-red-500">
-          <p>Incorrect data</p>
+          <p>Ошибка</p>
         </div>
         <div class="text-emerald-600">
-          <RouterLink to="/login"> Login </RouterLink>
+          <RouterLink to="/login"> Войти </RouterLink>
         </div>
       </form>
     </div>

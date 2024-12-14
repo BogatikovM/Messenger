@@ -22,7 +22,7 @@ export const updateMessage = async (req, res, next) => {
         }
         const chat = await Chat.findOne({ name: chatName })
         const message = await Message.findOne({ _id: messageId });
-        if ((message.sender === user) || (chat.admins.includes(user))) {
+        if (message.sender === user) {
             message.content = newContent
             await message.save()
             return res.status(201).send({ "result": "success", "message": "updated" })

@@ -52,9 +52,9 @@ onMounted(async () => {
         @submit.prevent="handleLogin"
         class="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4"
       >
-        <h2 class="text-3xl font-bold text-emerald-500">Login</h2>
+        <h2 class="text-3xl text-center font-bold text-emerald-500 mb-2">Вход</h2>
         <div class="mb-4">
-          <label class="block text-gray-700" for="login">Login</label>
+          <label class="block text-gray-700" for="login">Логин</label>
           <input
             type="text"
             v-model="form.login"
@@ -65,7 +65,7 @@ onMounted(async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700" for="password">Password</label>
+          <label class="block text-gray-700" for="password">Пароль</label>
           <input
             type="password"
             v-model="form.password"
@@ -77,17 +77,17 @@ onMounted(async () => {
         </div>
         <div class="flex items-center justify-between">
           <button
-            class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 w-full rounded"
+            class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 mb-2 w-full rounded"
             type="submit"
           >
-            Login
+            Войти
           </button>
         </div>
         <div v-if="form.failedAttempt" class="text-red-500">
-          <p>Incorrect data</p>
+          <p>Ошибка</p>
         </div>
         <div class="text-emerald-600">
-          <RouterLink to="/registration"> Register </RouterLink>
+          <RouterLink to="/registration"> Создать аккаунт </RouterLink>
         </div>
       </form>
     </div>

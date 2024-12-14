@@ -18,7 +18,7 @@ const handleLogout = async () => {
       @click="handleLogout"
       class="bg-emerald-500 text-white font-semibold py-2 px-4 rounded hover:bg-emerald-600 transition duration-200"
     >
-      Log out
+      Выйти
     </button>
   </div>
 </template>

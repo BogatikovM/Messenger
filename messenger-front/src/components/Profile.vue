@@ -79,14 +79,14 @@ onMounted(async () => {
 
 <template>
   <section class="bg-gray-100 h-screen flex flex-col justify-center items-center">
-    <h2 class="text-3xl font-bold text-emerald-500">User information</h2>
+    <h2 class="text-3xl font-bold text-emerald-500">О пользователе</h2>
     <div class="flex">
       <form
         @submit.prevent="handleChangeUserInfo"
         class="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4"
       >
         <div class="mb-4">
-          <label class="block text-gray-700" for="username">Username</label>
+          <label class="block text-gray-700" for="username">Имя пользователя</label>
           <input
             type="text"
             v-model="userInfo.username"
@@ -100,11 +100,11 @@ onMounted(async () => {
             class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 w-full rounded"
             type="submit"
           >
-            Change
+            Обновить
           </button>
         </div>
         <div v-if="userInfo.failedAttempt" class="text-red-500">
-          <p>Incorrect data</p>
+          <p>Ошибка</p>
         </div>
       </form>
     </div>
@@ -114,7 +114,7 @@ onMounted(async () => {
         class="bg-white shadow-md rounded-2xl px-8 pt-6 pb-8 mb-4"
       >
         <div class="mb-4">
-          <label class="block text-gray-700" for="username">Old password</label>
+          <label class="block text-gray-700" for="username">Текущий пароль</label>
           <input
             type="password"
             v-model="PasswordInfo.oldPassword"
@@ -124,7 +124,7 @@ onMounted(async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700" for="newPassword">New password</label>
+          <label class="block text-gray-700" for="newPassword">Новый пароль</label>
           <input
             type="password"
             v-model="PasswordInfo.newPassword"
@@ -134,7 +134,7 @@ onMounted(async () => {
           />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700" for="repeatPassword">Repeat new Password</label>
+          <label class="block text-gray-700" for="repeatPassword">Повтор пароля</label>
           <input
             type="password"
             v-model="PasswordInfo.repeatPassword"
@@ -148,11 +148,11 @@ onMounted(async () => {
             class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 w-full rounded"
             type="submit"
           >
-            Change
+            Обновить
           </button>
         </div>
         <div v-if="PasswordInfo.failedAttempt" class="text-red-500">
-          <p>Incorrect data</p>
+          <p>Ошибка</p>
         </div>
       </form>
     </div>
