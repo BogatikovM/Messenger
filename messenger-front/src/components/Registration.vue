@@ -18,7 +18,7 @@ const handleRegistration = async () => {
     password: form.password,
     username: form.username
   }
-  if (form.password.length < 11){
+  if (form.password === form.passwordConfirm && form.password.length < 11){
     form.failedAttempt = true
     return
   }
@@ -31,7 +31,7 @@ const handleRegistration = async () => {
       form.failedAttempt = true
     }
   } catch (error) {
-    console.error('Login failure', error)
+    console.error('Registration failure', error)
   }
 }
 </script>

@@ -43,6 +43,14 @@ app.use(session({
     store: sessionStore
 }))
 
+app.use(function(req, res, next){
+    if (!req.session || !req.session.user){
+        return res.status(403).send({ "result": "fail", "message": "not permitted" })
+    } else {
+        next()
+    }
+})
+
 const rateLimiter = new RateLimiterMemory({
     points: 10,
     duration:1,
