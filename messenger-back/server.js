@@ -44,7 +44,7 @@ app.use(session({
 }))
 
 app.use(function(req, res, next){
-    if (!req.session || !req.session.user){
+    if ((req.url == "/" || req.url == "/profile") && (!req.session || !req.session.user)){
         return res.status(403).send({ "result": "fail", "message": "not permitted" })
     } else {
         next()

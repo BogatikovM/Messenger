@@ -25,6 +25,9 @@ export const deleteMember = async (req, res, next) => {
         if (!chat.admins.includes(user)) {
             return res.status(200).send({ "result": "fail", "message": "not permitted" })
         }
+        if (!chat.admins.includes(member)) {
+            return res.status(200).send({ "result": "fail", "message": "not permitted" })
+        }
         chat.members.pull(member.login)
         await chat.save()
         return res.status(200).send({ "result": "success", "message": "deleted" })
