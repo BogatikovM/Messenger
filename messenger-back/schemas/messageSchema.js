@@ -17,6 +17,11 @@ const messageSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true,
+    },
+    is_visible: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 })
 

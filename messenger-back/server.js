@@ -3,6 +3,7 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import { RateLimiterMemory } from 'rate-limiter-flexible'
 import helmet from 'helmet'
+import mongoSanitize from 'express-mongo-sanitize'
 import registrationRoute from './routes/registrationRoute.js'
 import loginRoute from './routes/loginRoute.js'
 import logoutRoute from './routes/logoutRoute.js'
@@ -26,6 +27,7 @@ import messageUpdateRoute from './routes/messageUpdateRoute.js'
 const app = express()
 
 app.use(express.json())
+app.use(mongoSanitize())
 
 const sessionStore = MongoStore.create({
     mongoUrl: process.env.mongo_url,

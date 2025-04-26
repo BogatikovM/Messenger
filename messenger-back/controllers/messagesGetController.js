@@ -12,7 +12,8 @@ export const getMessages = async (req, res, next) => {
 
     try {
         mongoose.connect(process.env.mongo_url)
-        const messages = await Message.find({ chat: chat });
+        //const messages = await Message.find({ chat: chat });
+        const messages = await Message.find({ chat: chat, is_visible: true });
         res.status(201).json({ "result": "success", "data": messages, "user": user })
     } catch (error) {
         res.status(500).json({ "result": "fail" })

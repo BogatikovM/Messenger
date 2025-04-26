@@ -22,7 +22,9 @@ export const deleteMessage = async (req, res, next) => {
         const chat = await Chat.findOne({ name: chatName })
         const message = await Message.findOne({ _id: messageId });
         if ((message.sender === user) || (chat.admins.includes(user))) {
-            await Message.deleteOne({ _id: messageId })
+            message.is_visible = false
+            await message.save()
+            //await Message.deleteOne({ _id: messageId })
             return res.status(200).send({ "result": "success", "message": "deleted" })
         } else {
             return res.status(200).send({ "result": "fail", "message": "not permitted" })
